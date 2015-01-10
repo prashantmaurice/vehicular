@@ -1,7 +1,7 @@
 var globalVar = {};
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope,$http) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -32,61 +32,51 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+
+
+      //data fetch functions
+      $rootScope.cars = [];
+      $rootScope.doRefresh = function() {
+        $http.get('https://spreadsheets.google.com/feeds/list/1wNJ1v1s9GKcSq7EkJU0qoK1TZdPD6J9FFXSROuvJmcc/od6/public/values?alt=json')
+            .success(function(data) {
+              console.log(data);
+              var rows = data.feed.entry;
+              var finalData = [];
+              rows.forEach(function(row){finalData.push({
+                sno  : parseInt(row.gsx$sno.$t),
+                cartype : row.gsx$cartype.$t,
+                colour  : row.gsx$colour.$t,
+                fueltype  : row.gsx$fueltype.$t,
+                kms  : parseInt(row.gsx$kms.$t),
+                model  : row.gsx$model.$t,
+                owner  : row.gsx$owner.$t,
+                price  : parseInt(row.gsx$price.$t),
+                samplepics  : row.gsx$samplepics.$t,
+                sellername  : row.gsx$sellername.$t,
+                sellerphone  : row.gsx$sellerphone.$t,
+                year  : parseInt(row.gsx$year.$t),
+                location  : row.gsx$location.$t
+              })});
+
+              console.log(rows);
+              console.log(finalData);
+              $rootScope.cars = finalData;
+            })
+            .error(function () {
+
+            })
+            .finally(function() {
+              // Stop the ion-refresher from spinning
+              $rootScope.$broadcast('scroll.refreshComplete');
+            })
+
+      };
 })
 
 .controller('PlaylistsCtrl', function($scope,$http,$rootScope) {
-  $rootScope.cars = [];
-  $scope.doRefresh = function() {
-    console.log($http.get('./data.json'));
-    //$http.get('./data.json')
-    //    .success(function(newItems) {
-    //      console.log("SUCCESS:"+JSON.stringify(newItems['cars']));
-    //      $scope.cars = newItems['cars'];
-    //    })
-    //    .error(function () {
-    //
-    //    })
-    //    .finally(function() {
-    //      // Stop the ion-refresher from spinning
-    //      $scope.$broadcast('scroll.refreshComplete');
-    //    })
-    $http.get('https://spreadsheets.google.com/feeds/list/1wNJ1v1s9GKcSq7EkJU0qoK1TZdPD6J9FFXSROuvJmcc/od6/public/values?alt=json')
-        .success(function(data) {
-          console.log(data);
-          var rows = data.feed.entry;
-          var finalData = [];
-          rows.forEach(function(row){finalData.push({
-            sno  : parseInt(row.gsx$sno.$t),
-            cartype : row.gsx$cartype.$t,
-            colour  : row.gsx$colour.$t,
-            fueltype  : row.gsx$fueltype.$t,
-            kms  : parseInt(row.gsx$kms.$t),
-            model  : row.gsx$model.$t,
-            owner  : row.gsx$owner.$t,
-            price  : parseInt(row.gsx$price.$t),
-            samplepics  : row.gsx$samplepics.$t,
-            sellername  : row.gsx$sellername.$t,
-            sellerphone  : row.gsx$sellerphone.$t,
-            year  : parseInt(row.gsx$year.$t),
-            location  : row.gsx$location.$t
-          })});
-
-          console.log(rows);
-          console.log(finalData);
-          $rootScope.cars = finalData;
-        })
-        .error(function () {
-
-        })
-        .finally(function() {
-          // Stop the ion-refresher from spinning
-          $scope.$broadcast('scroll.refreshComplete');
-        })
-
-  };
   $scope.init = function() {
     console.log("initialize called");
-    $scope.doRefresh();
+    $rootScope.doRefresh();
   };
 
 })
@@ -96,19 +86,25 @@ angular.module('starter.controllers', [])
       console.log($stateParams);
       var sno = $stateParams.sno;
 
-      $rootScope.cars.forEach(function(car){
-        if(car.sno==sno){
-          $scope.car = car;
-        }
+      $scope.$watch('cars', function() {
+        var found = false;
+        $rootScope.cars.forEach(function(car){
+          if(car.sno==sno){
+            $scope.car = car;
+            found = true;
+          }
+        });
+        $scope.offer = 0;
+        if(found) $scope.offerprice = (1-($scope.offer/100))*$scope.car.price;
+        else $scope.offerprice = 0;
       });
-      $scope.offer = 0;
-      $scope.offerprice = (1-($scope.offer/100))*$scope.car.price;
       $scope.increaseOffer = function(){
         $scope.offer = $scope.offer +10;
       };
       $scope.decreaseOffer = function(){
         $scope.offer = $scope.offer -10;
       };
+
 
       //DRAW MAP
       $scope.myLatlng = new google.maps.LatLng(12.983662, 77.638499);
@@ -144,4 +140,9 @@ angular.module('starter.controllers', [])
 //        editable : true,
 //        radius: $scope.radius
 //      };
+      $scope.init = function() {
+        console.log("initialize called");
+        $rootScope.doRefresh();
+      };
 });
+
