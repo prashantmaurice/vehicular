@@ -33,15 +33,28 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('PlaylistsCtrl', function($scope,$http) {
+  $scope.cars = [];
+  $scope.doRefresh = function() {
+    console.log($http.get('./data.json'));
+    $http.get('./data.json')
+        .success(function(newItems) {
+          console.log("SUCCESS:"+JSON.stringify(newItems['cars']));
+          $scope.cars = newItems['cars'];
+        })
+        .error(function () {
+
+        })
+        .finally(function() {
+          // Stop the ion-refresher from spinning
+          $scope.$broadcast('scroll.refreshComplete');
+        })
+  };
+  $scope.init = function() {
+    console.log("initialize called");
+    $scope.doRefresh();
+  };
+
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {

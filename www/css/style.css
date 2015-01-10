@@ -1,1 +1,42 @@
-/* Empty. Add your own CSS if you like */
+/*TOP HEADER*/
+.bar .title{
+    color: #000;
+}
+
+
+/*ALL CARS PAGE*/
+@font-face {
+    font-family: customFont;
+    src: url(../fonts/ArialBold.ttf);
+}
+html, body{
+    font-family: customFont;
+}
+
+
+.each-post>.item-content{
+    padding: 0px;
+}
+.eachDealmini{
+    width: 100%;
+    background: #F5F5F5;
+    position: relative;
+}
+.eachDealmini>img{
+    width: 100%;
+}
+.eachDealmini>.cost{
+    position: absolute;
+    bottom:53px;/*TODO: set wrt to img*/
+    background-color: #f65e63;
+    color: #fff;
+    font-size: 0.8em;
+    padding: 10px;
+}
+.eachDealmini>.title{
+    font-size: 1em;
+}
+.eachDealmini>.area{
+    color: #999;
+    font-size: 0.8em;
+}
