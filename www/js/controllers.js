@@ -1,3 +1,4 @@
+var globalVar = {};
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -33,8 +34,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope,$http) {
-  $scope.cars = [];
+.controller('PlaylistsCtrl', function($scope,$http,$rootScope) {
+  $rootScope.cars = [];
   $scope.doRefresh = function() {
     console.log($http.get('./data.json'));
     //$http.get('./data.json')
@@ -55,24 +56,24 @@ angular.module('starter.controllers', [])
           var rows = data.feed.entry;
           var finalData = [];
           rows.forEach(function(row){finalData.push({
+            sno  : parseInt(row.gsx$sno.$t),
             cartype : row.gsx$cartype.$t,
             colour  : row.gsx$colour.$t,
             fueltype  : row.gsx$fueltype.$t,
-            kms  : row.gsx$kms.$t,
+            kms  : parseInt(row.gsx$kms.$t),
             model  : row.gsx$model.$t,
             owner  : row.gsx$owner.$t,
-            price  : row.gsx$price.$t,
+            price  : parseInt(row.gsx$price.$t),
             samplepics  : row.gsx$samplepics.$t,
             sellername  : row.gsx$sellername.$t,
             sellerphone  : row.gsx$sellerphone.$t,
-            sno  : row.gsx$sno.$t,
-            year  : row.gsx$year.$t,
+            year  : parseInt(row.gsx$year.$t),
             location  : row.gsx$location.$t
           })});
 
           console.log(rows);
           console.log(finalData);
-          $scope.cars = finalData;
+          $rootScope.cars = finalData;
         })
         .error(function () {
 
@@ -90,6 +91,57 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-  console.log($stateParams);
+.controller('PlaylistCtrl', function($scope, $stateParams,$rootScope) {
+      console.log($scope);
+      console.log($stateParams);
+      var sno = $stateParams.sno;
+
+      $rootScope.cars.forEach(function(car){
+        if(car.sno==sno){
+          $scope.car = car;
+        }
+      });
+      $scope.offer = 0;
+      $scope.offerprice = (1-($scope.offer/100))*$scope.car.price;
+      $scope.increaseOffer = function(){
+        $scope.offer = $scope.offer +10;
+      };
+      $scope.decreaseOffer = function(){
+        $scope.offer = $scope.offer -10;
+      };
+
+      //DRAW MAP
+      $scope.myLatlng = new google.maps.LatLng(12.983662, 77.638499);
+      var mapOptions = {
+        zoom: 12,
+        center: $scope.myLatlng
+      };
+      var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+      //var image = 'img/marker1.png';
+      //var marker_mylocation = new google.maps.Marker({
+      //  position: $scope.myLatlng,
+      //  map: map,
+      //  draggable:true,
+      //  icon: image,
+      //  animation: google.maps.Animation.DROP,
+      //  title: 'Hello World!'
+      //});
+      //google.maps.event.addListener(marker_mylocation, 'click', toggleBounce);
+
+//      var populationOptions = {
+//        strokeColor: '#3399FF',
+//        strokeOpacity: 0.8,
+//        strokeWeight: 2,
+//        fillColor: '#3399FF',
+//        fillOpacity: 0.1,
+//        map: map,
+////            icon: {
+////                url: "img/location_pin.png",
+////                size: new google.maps.Size(700, 700),
+////                anchor: new google.maps.Point(40, 40)
+////            },
+//        //center: $scope.myLatlng,
+//        editable : true,
+//        radius: $scope.radius
+//      };
 });

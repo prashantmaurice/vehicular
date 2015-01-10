@@ -43,3 +43,65 @@ html, body{
     font-size: 0.8em;
     padding-left: 10px;
 }
+
+
+/*ALL DETAILS PAGE STUFF*/
+.pic-wrapper{
+    width: 100%;
+    position: relative;
+}
+.pic-wrapper>.pic{
+    width: 100%;
+}
+.pic-wrapper>.price{
+    position: absolute;
+    bottom:38px;/*TODO: set wrt to img*/
+    background-color: #f65e63;
+    color: #fff;
+    font-size: 0.8em;
+    padding: 10px;
+}
+.content-wrapper{
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 20px;
+}
+.content-wrapper>.title{
+    font-size: 1.3em;
+}
+.content-wrapper>.car-location{
+    font-size: 1em;
+    color: #999;
+}
+h3{
+    font-size: 1.2em;
+    color: #000;
+}
+span{
+    font-size: 1em;
+    color: #999;
+}
+
+/*OFFER SECTION*/
+.offer-editor-wrapper>.button{
+    width: 40px;
+    height:40px;
+    line-height: 40px;
+    border: 2px solid #f65e63;
+    color: #f65e63;
+}
+.button2{
+    height:40px;
+    line-height: 40px;
+    border: 2px solid #f65e63;
+    color: #f65e63;
+}
+
+/*MAP STUFF*/
+#map-canvas {
+    height: 400px;
+    width:100%;
+    margin: 0px;
+    padding: 0px
+}

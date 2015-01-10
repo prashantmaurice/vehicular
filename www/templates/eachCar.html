@@ -1,5 +1,41 @@
 <ion-view view-title="Details">
   <ion-content>
-    <h1>Playlist3</h1>
+    <div class="details-wrapper">
+      <div class="pic-wrapper">
+        <img class="pic" ng-src="{{car.samplepics}}"/>
+        <div class="price">{{car.price | number:0}}</div>
+      </div>
+      <div class="content-wrapper">
+        <div class="title">{{car.year}} {{car.color}} {{car.cartype}} {{car.model}}</div>
+        <div class="car-location">{{car.location}}</div>
+        <hr>
+        <h3>Hived@Oracle</h3>
+        <span>{{car.sellername}}</span>
+        <span>Domlur, Bangalore</span>
+        <hr>
+        <div class="offer-wrapper">
+          <table width="100%">
+            <tr>
+              <td width="50%">
+                <h3>Make an Offer</h3>
+                <div class="offer-editor-wrapper">
+                  <div class="button" ng-click="decreaseOffer()">-</div>
+                  <div style="display: inline-block; height: 40px;line-height: 40px;">{{offer}}%</div>
+                  <div class="button" ng-click="increaseOffer()">+</div>
+                </div>
+              </td>
+              <td  width="50%" style="text-align: right">
+                <h3>{{((1+(offer/100))*car.price) | number:0}}</h3>
+                <div class="button2 button">Preview Offer</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <hr>
+        <h3>Product Overview</h3>
+        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ipsum leo, iaculis in neque quis, varius semper est. Duis arcu neque, tristique sit amet commodo non, tincidunt in lorem</span>
+      </div>
+      <div id="map-canvas"></div>
+    </div>
   </ion-content>
 </ion-view>
