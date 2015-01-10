@@ -21,13 +21,14 @@ html, body{
     width: 100%;
     background: #F5F5F5;
     position: relative;
+    padding-bottom: 10px;
 }
 .eachDealmini>img{
     width: 100%;
 }
 .eachDealmini>.cost{
     position: absolute;
-    bottom:53px;/*TODO: set wrt to img*/
+    bottom:68px;/*TODO: set wrt to img*/
     background-color: #f65e63;
     color: #fff;
     font-size: 0.8em;
@@ -35,8 +36,10 @@ html, body{
 }
 .eachDealmini>.title{
     font-size: 1em;
+    padding-left: 10px;
 }
 .eachDealmini>.area{
     color: #999;
     font-size: 0.8em;
+    padding-left: 10px;
 }

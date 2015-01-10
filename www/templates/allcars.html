@@ -7,10 +7,10 @@
     <ion-list>
       <ion-item class="each-post" ng-repeat="car in cars" href="#/app/playlists/{{car.id}}">
         <div class="eachDealmini">
-          <img class="" ng-src="{{car.img}}"/>
-          <div class="cost">{{car.cost}}</div>
-          <div class="title">{{car.title}}</div>
-          <div class="area">{{car.area}}</div>
+          <img class="" ng-src="{{car.samplepics}}"/>
+          <div class="cost">{{car.price}}</div>
+          <div class="title">{{car.color}} {{car.cartype}} {{car.model}}</div>
+          <div class="area">{{car.location}}</div>
 
         </div>
       </ion-item>

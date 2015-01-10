@@ -37,10 +37,42 @@ angular.module('starter.controllers', [])
   $scope.cars = [];
   $scope.doRefresh = function() {
     console.log($http.get('./data.json'));
-    $http.get('./data.json')
-        .success(function(newItems) {
-          console.log("SUCCESS:"+JSON.stringify(newItems['cars']));
-          $scope.cars = newItems['cars'];
+    //$http.get('./data.json')
+    //    .success(function(newItems) {
+    //      console.log("SUCCESS:"+JSON.stringify(newItems['cars']));
+    //      $scope.cars = newItems['cars'];
+    //    })
+    //    .error(function () {
+    //
+    //    })
+    //    .finally(function() {
+    //      // Stop the ion-refresher from spinning
+    //      $scope.$broadcast('scroll.refreshComplete');
+    //    })
+    $http.get('https://spreadsheets.google.com/feeds/list/1wNJ1v1s9GKcSq7EkJU0qoK1TZdPD6J9FFXSROuvJmcc/od6/public/values?alt=json')
+        .success(function(data) {
+          console.log(data);
+          var rows = data.feed.entry;
+          var finalData = [];
+          rows.forEach(function(row){finalData.push({
+            cartype : row.gsx$cartype.$t,
+            colour  : row.gsx$colour.$t,
+            fueltype  : row.gsx$fueltype.$t,
+            kms  : row.gsx$kms.$t,
+            model  : row.gsx$model.$t,
+            owner  : row.gsx$owner.$t,
+            price  : row.gsx$price.$t,
+            samplepics  : row.gsx$samplepics.$t,
+            sellername  : row.gsx$sellername.$t,
+            sellerphone  : row.gsx$sellerphone.$t,
+            sno  : row.gsx$sno.$t,
+            year  : row.gsx$year.$t,
+            location  : row.gsx$location.$t
+          })});
+
+          console.log(rows);
+          console.log(finalData);
+          $scope.cars = finalData;
         })
         .error(function () {
 
@@ -49,6 +81,7 @@ angular.module('starter.controllers', [])
           // Stop the ion-refresher from spinning
           $scope.$broadcast('scroll.refreshComplete');
         })
+
   };
   $scope.init = function() {
     console.log("initialize called");
@@ -58,4 +91,5 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+  console.log($stateParams);
 });
