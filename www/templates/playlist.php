@@ -1,5 +1,8 @@
 <ion-view view-title="Playlist">
   <ion-content>
-    <h1>Playlist</h1>
+    <?php echo "php working" ?>
+    wosa
+    <h1>Playlist3</h1>
+
   </ion-content>
 </ion-view>
