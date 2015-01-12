@@ -1,8 +1,0 @@
-{
-  "cars" : [
-    { "title": "Toyota for Urgent sale", "id": 1, "img":"http://www.gothamdreamcars.com/assets/home-exotic-car-rental-2ccbf15de18e5b28c2e591d53d09bc2f.jpg", "cost":100000, "area":"koramangala" },
-    { "title": "Hyundai Getz prime, 2008", "id": 2, "img":"http://c2c.sulekhalive.com/cars/images/variants/toyota/toyota-etios/thumbnail/toyota-etios-2010-12-7-0-35-18.jpg", "cost":100000, "area":"domlur" },
-    { "title": "Toyota for Urgent sale", "id": 3, "img":"http://www.viewx.co.nz/upload/films/cars_300.jpg", "cost":100000, "area":"hyderabad" },
-    { "title": "Toyota for Urgent sale", "id": 4, "img":"http://www.moneysupermarket.com/wp-content/uploads/2013/01/colourful-cars-img-300x150.jpg", "cost":100000, "area":"indiranagara" }
-  ]
-}
